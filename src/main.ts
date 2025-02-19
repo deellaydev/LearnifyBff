@@ -8,7 +8,7 @@ const PORT = process.env.PORT;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
-    origin: 'http://localhost:5173', // Замените на ваш фронтенд домен
+    origin: 'https://learnifyclient.onrender.com', // Замените на ваш фронтенд домен
     credentials: true, // Разрешить отправку куки
   });
   app.use(cookieParser());
