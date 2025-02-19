@@ -15,6 +15,34 @@ export class UsersService {
     return student;
   }
 
+  async updateStudent(dto: BaseUserDto) {
+    //@ts-ignore
+    const user = await this.studentRepository.findByPk(dto.id);
+    if (!user) return;
+
+    user.firstname = dto.firstname;
+    user.surname = dto.surname;
+
+    await user.save();
+    return user;
+  }
+
+  async updateMentor(dto: MentorDto) {
+    //@ts-ignore
+    const user = await this.mentorRepository.findByPk(dto.id);
+    if (!user) return;
+
+    user.firstname = dto.firstname;
+    user.surname = dto.surname;
+    user.notWorked = dto.notWorked;
+    user.workExperience = dto.workExperience
+      .map(({ workPlace, experience }) => `${workPlace}/${experience}`)
+      .join(';');
+
+    await user.save();
+    return user;
+  }
+
   async getAllStudents() {
     const students = await this.studentRepository.findAll({
       include: { all: true },
